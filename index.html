@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shreyansh's Portfolio | ML Researcher</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js (for SGPA Chart) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- three.js (for Hero Animation) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- SOTA v5.0 DESIGN SYSTEM --- */
+        
+        @keyframes gentleFadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        
+        @keyframes slideInUp {
+          from { 
+            opacity: 0;
+            transform: translateY(40px);
+          }
+          to { 
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        /* Gradient Shimmer for Headings */
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        
+        /* Marquee Animation for App Wall */
+        @keyframes marquee-slow {
+            from { transform: translateX(0%); }
+            to { transform: translateX(-50%); }
+        }
+        @keyframes marquee-fast {
+            from { transform: translateX(-25%); }
+            to { transform: translateX(-75%); }
+        }
+
+        :root {
+            --apple-blue: #0071e3;
+            --apple-blue-hover: #0077ed;
+            --text-primary-dark: #f5f5f7;
+            --text-secondary-dark: #a1a1a6;
+            --background-black: #000000;
+            
+            --text-primary-light: #1d1d1f;
+            --text-secondary-light: #515154;
+            --background-white: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--background-black);
+            color: var(--text-primary-dark);
+            animation: gentleFadeIn 1s ease-out;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* --- Section Themes --- */
+        .section-dark {
+            background-color: var(--background-black);
+            color: var(--text-primary-dark);
+        }
+        .section-light {
+            background-color: var(--background-white);
+            color: var(--text-primary-light);
+        }
+        
+        /* --- Scroll Animation --- */
+        .fade-in-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+            transition-delay: 0.1s;
+        }
+        
+        .fade-in-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* --- Typography --- */
+        .gradient-text-blue {
+            background: linear-gradient(to right, var(--apple-blue), #00c3ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+        
+        /* Gradient for subheadings */
+        .gradient-heading {
+            background: linear-gradient(90deg, #ec4899, #a855f7, #ec4899);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+            animation: shimmer 5s linear infinite;
+        }
+
+        /* Main Hero Heading: Extra-Light weight */
+        .pro-heading {
+            font-weight: 200; /* Inter Extra-Light */
+            color: var(--text-primary-dark);
+            letter-spacing: -0.02em;
+            font-size: 4.5rem; /* 72px */
+            line-height: 1.1;
+            animation: slideInUp 0.8s ease-out;
+            animation-delay: 0.2s;
+            animation-fill-mode: backwards;
+        }
+        
+        .hero-sub {
+            font-size: 1.65rem; /* 26px */
+            line-height: 1.4;
+            font-weight: 400;
+            color: var(--text-secondary-dark);
+            animation: slideInUp 0.8s ease-out;
+            animation-delay: 0.4s;
+            animation-fill-mode: backwards;
+        }
+        
+        .hero-btn {
+            animation: slideInUp 0.8s ease-out;
+            animation-delay: 0.6s;
+            animation-fill-mode: backwards;
+        }
+
+        /* Section Headings: Light weight */
+        .section-heading {
+            font-weight: 300; /* Inter Light */
+            font-size: 3.5rem; /* 56px */
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+        .section-heading-dark { color: var(--text-primary-dark); }
+        .section-heading-light { color: var(--text-primary-light); }
+        
+        .section-subheading {
+            font-size: 1.25rem; /* 20px */
+            font-weight: 600; /* Bolder for contrast */
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        /* --- UI Elements --- */
+        .glass-nav {
+            background: rgba(0, 0, 0, 0.7); /* Black @ 70% */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* White border */
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-link {
+            color: var(--text-secondary-dark);
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+        .nav-link:hover {
+            color: var(--text-primary-dark);
+        }
+        .nav-link.active {
+            color: var(--apple-blue);
+            font-weight: 600;
+        }
+        
+        /* --- V5.0 "TRUE LIQUID GLASS" --- */
+        .liquid-glass-dark {
+            /* 1. Volumetric Background: Simulates depth */
+            background: linear-gradient(rgba(20, 20, 20, 0.4), rgba(20, 20, 20, 0.6));
+            
+            /* 2. Liquid Blur */
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            
+            /* 3. "Gummy" Edges & Highlight */
+            border-radius: 1.75rem; /* 28px */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            
+            /* 4. Lift & Inset Edge (Apple Technique) */
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), 
+                        0 0 0 1px rgba(255, 255, 255, 0.07) inset;
+            
+            transition: box-shadow 0.4s ease, border-color 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .liquid-glass-dark:hover {
+            border-color: rgba(0, 113, 227, 0.7); /* Stable hover: just the border */
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.35), /* More lift */
+                        0 0 0 1px rgba(255, 255, 255, 0.07) inset;
+        }
+
+        .liquid-glass-light {
+            /* 1. Volumetric Background */
+            background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.3));
+            
+            /* 2. Liquid Blur */
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            
+            /* 3. "Gummy" Edges */
+            border-radius: 1.75rem; /* 28px */
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            
+            /* 4. Lift & Inset Edge */
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1), 
+                        0 0 0 1px rgba(0, 0, 0, 0.05) inset;
+            
+            transition: box-shadow 0.4s ease, border-color 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .liquid-glass-light:hover {
+            border-color: rgba(0, 113, 227, 0.7);
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.15),
+                        0 0 0 1px rgba(0, 0, 0, 0.05) inset;
+        }
+
+
+        /* --- Buttons (Squircle) --- */
+        .btn {
+            padding: 0.8rem 1.6rem; /* Slightly larger */
+            border-radius: 1rem; /* 16px "Squircle" */
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            font-size: 0.95rem;
+            cursor: pointer; /* --- FIX: Added cursor pointer for all buttons --- */
+        }
+        .btn-primary {
+            background-color: var(--apple-blue);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background-color: var(--apple-blue-hover);
+            transform: scale(1.03);
+        }
+        .btn-secondary-dark {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary-dark);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .btn-secondary-dark:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .btn-secondary-light {
+            background-color: rgba(0, 0, 0, 0.05);
+            color: var(--text-primary-light);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        .btn-secondary-light:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-disabled {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary-dark);
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        
+        /* Project Tech Pills */
+        .tech-pill-dark {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.75rem; /* 12px */
+            font-weight: 500;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+        }
+
+        /* --- SOTA Features --- */
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Experience Tabs */
+        .tab-button-dark {
+            padding: 0.75rem 1rem;
+            font-weight: 500;
+            color: var(--text-secondary-dark);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .tab-button-dark.active {
+            color: var(--apple-blue);
+            border-bottom-color: var(--apple-blue);
+        }
+        .tab-content {
+            display: none;
+            animation: gentleFadeIn 0.5s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        /* App Wall (Toolkit) */
+        .app-wall-container {
+            overflow: hidden;
+            position: relative;
+            /* Gradient mask to fade edges */
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+        .app-wall-row {
+            display: flex;
+            width: max-content;
+            flex-shrink: 0;
+            padding: 0.75rem 0;
+        }
+        .animate-marquee-slow {
+            animation: marquee-slow 60s linear infinite;
+        }
+        .animate-marquee-fast {
+            animation: marquee-fast 60s linear infinite;
+        }
+        
+        .app-squircle {
+            width: 100px;
+            height: 100px;
+            border-radius: 1.5rem; /* 24px */
+            margin: 0 0.75rem;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            flex-shrink: 0; /* Prevent icons from shrinking */
+        }
+        .app-squircle:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .app-squircle svg { width: 100%; height: 100%; }
+        
+        /* App Icon Styles */
+        .app-python { background: linear-gradient(135deg, #387EB8 0%, #3670A0 100%); }
+        .app-vscode { background: linear-gradient(135deg, #007ACC 0%, #006AB1 100%); padding: 18px; }
+        .app-excel { background: linear-gradient(135deg, #1D6F42 0%, #185C37 100%); padding: 18px; }
+        .app-pitch { background: linear-gradient(135deg, #2C2C2C 0%, #000 100%); padding: 22px; }
+        .app-github { background: linear-gradient(135deg, #24292E 0%, #1B1F23 100%); }
+        .app-overleaf { background: linear-gradient(135deg, #4A90E2 0%, #3A7BC2 100%); }
+        .app-streamlit { background-color: #F8F9FA; padding: 22px; }
+        .app-colab { background: linear-gradient(135deg, #F9AB00 0%, #E69B00 100%); padding: 20px; }
+        .app-jupyter { background-color: #F8F9FA; padding: 18px; }
+        .app-anaconda { background-color: #F8F9FA; padding: 16px; }
+
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Section 0: Header -->
+    <header id="header" class="sticky top-0 z-50 w-full glass-nav">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo/Title -->
+            <a href="#home" class="text-xl font-light text-white"> <!-- --- FIX: font-semibold to font-light --- -->
+                Shreyansh's Portfolio
+            </a>
+            
+            <!-- Navigation Links -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#home" class="nav-link active" data-section="home">Home</a>
+                <a href="#research" class="nav-link" data-section="research">Research</a>
+                <a href="#experience" class="nav-link" data-section="experience">Experience</a>
+                <a href="#projects" class="nav-link" data-section="projects">Projects</a>
+                <a href="#academics" class="nav-link" data-section="academics">Academics</a>
+                <a href="ideas.html" target="_blank" class="nav-link" data-section="ideas">Ideas</a>
+                <a href="#contact" class="nav-link" data-section="contact">Contact</a>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <button id="menuButton" class="md:hidden text-slate-100 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </nav>
+
+        <!-- Mobile Menu (Dark) -->
+        <div id="mobileMenu" class="hidden md:hidden px-6 pb-4 space-y-2 border-t border-slate-800">
+            <a href="#home" class="nav-link block active" data-section="home-mobile">Home</a>
+            <a href="#research" class="nav-link block" data-section="research-mobile">Research</a>
+            <a href="#experience" class="nav-link block" data-section="experience-mobile">Experience</a>
+            <a href="#projects" class="nav-link block" data-section="projects-mobile">Projects</a>
+            <a href="#academics" class="nav-link block" data-section="academics-mobile">Academics</a>
+            <a href="ideas.html" target="_blank" class="nav-link block" data-section="ideas-mobile">Ideas</a>
+            <a href="#contact" class="nav-link block" data-section="contact-mobile">Contact</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="w-full">
+
+        <!-- Section 1: Hero -->
+        <section id="home" class="section-dark relative h-screen flex items-center justify-center text-center -mx-6">
+            <canvas id="hero-canvas"></canvas>
+            <div class="hero-content max-w-4xl px-6">
+                <h1 class="pro-heading mb-6">
+                    Shreyansh Kumar Basotia
+                </h1>
+                <h2 class="hero-sub mb-8">
+                    ML researcher with a goal to solve real-world problems.
+                </h2>
+                <p class="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto mb-10 hero-sub" style="animation-delay: 0.5s;">
+                    I build high-accuracy, efficient models that solve real-world challenges, blending deep technical expertise with a keen strategic mindset to deliver solutions that are not just intelligent, but impactful.
+                </p>
+                <a href="#research" class="hero-btn btn btn-primary text-lg">
+                    View my latest paper
+                </a>
+            </div>
+        </section>
+
+        <!-- Section 2: Research (Light) -->
+        <section id="research" class="section-light py-24">
+            <div class="container mx-auto px-6">
+                <div class="fade-in-on-scroll text-center max-w-3xl mx-auto">
+                    <span class="section-subheading gradient-heading">Publications</span>
+                    <h2 class="section-heading-light mt-4 mb-6">Research & Publications</h2>
+                    <p class="text-lg text-slate-600 mb-16">
+                        My research focuses on developing novel deep learning architectures that are both computationally efficient and highly accurate, pushing the boundaries of what's possible in medical and historical data analysis.
+                    </p>
+                </div>
+                
+                <!-- Main Research Card 1: Brain Tumor -->
+                <div class="liquid-glass-light fade-in-on-scroll p-8 md:p-10 mb-8">
+                    <span class="text-sm font-semibold text-slate-500">PUBLISHED · IEEE IC-CGU 2025</span>
+                    <h3 class="text-2xl font-semibold text-black my-3">Early Brain Tumor Detection Using Dynamic Spectrum & Modified Swin Transformer</h3>
+                    <p class="text-slate-700 mb-6">This published work introduces a training-free model that achieves 97.25% accuracy. It uses a novel Dynamic Spectrum method for localizing tumor-prone regions and an Expanding Dynamic Window logic to refine detection, resulting in a state-of-the-art inference time of just 0.16s.</p>
+                    <a href="https://your-paper-link.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                        View IEEE Publication
+                    </a>
+                </div>
+                
+                <!-- "Pro Stats" for Research -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mb-16 fade-in-on-scroll">
+                    <div class="liquid-glass-light p-6 text-center">
+                        <h3 class="text-4xl md:text-5xl font-semibold" style="color: #ec4899;">97.25%</h3>
+                        <p class="text-sm text-slate-600">Model Accuracy</p>
+                    </div>
+                    <div class="liquid-glass-light p-6 text-center" style="animation-delay: 0.1s;">
+                        <h3 class="text-4xl md:text-5xl font-semibold" style="color: #a855f7;">0.16s</h3>
+                        <p class="text-sm text-slate-600">Inference Time</p>
+                    </div>
+                    <div class="liquid-glass-light p-6 text-center" style="animation-delay: 0.2s;">
+                        <h3 class="text-4xl md:text-5xl font-semibold" style="color: #6366f1;">0.935</h3>
+                        <p class="text-sm text-slate-600">Dice Score</p>
+                    </div>
+                </div>
+                
+                <!-- Main Research Card 2: Manuscript Restoration -->
+                <div class="liquid-glass-light fade-in-on-scroll" style="transition-delay: 0.2s;">
+                    <div class="p-8 md:p-10">
+                        <span class="text-sm font-semibold text-slate-500">ONGOING RESEARCH</span>
+                        <h3 class="text-2xl font-semibold text-black my-3">AuraVision: Swinir, FFC and Frequency Analysis to Restore Manuscript and Old Data</h3>
+                        <p class="text-slate-700 mb-6">My current research, "AuraVision," investigates the use of SWinir models and Fast Fourier Convolutions (FFC) to restore heavily degraded historical manuscripts. By analyzing frequency domain data, this model aims to reconstruct unreadable text and images.</p>
+                        <a href="https://your-research-progress-link.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary-light">
+                            View Progress
+                        </a>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- Section 3: Experience (Dark) -->
+        <section id="experience" class="section-dark py-24">
+            <div class="container mx-auto px-6">
+                <!-- Part 3.A: Global Immersion -->
+                <div class="liquid-glass-dark fade-in-on-scroll mb-16">
+                    <div class="p-8 md:p-12 text-center">
+                        <span class="section-subheading gradient-heading">Global Experience</span>
+                        <h2 class="section-heading-dark mt-4 mb-4">Global Immersion: Berlin</h2>
+                        <p class="text-lg text-slate-300 max-w-3xl mx-auto">
+                            Attended an intensive two-week Data Analytics & Visualization summer school at <span class="text-white font-medium">Technische Universität (TU) Berlin</span>. I led a project to develop an interactive dashboard and graduated with the highest possible distinction <span class="text-white font-medium">(Grade 1.0)</span> under the German grading system.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Part 3.B: Professional Experience -->
+<div class="liquid-glass-dark fade-in-on-scroll">
+    <div class="p-6 sm:p-10">
+        <h2 class="section-heading-dark text-center mb-10">Professional Experience</h2>
+
+        <!-- Tab Buttons -->
+        <div class="flex flex-wrap border-b border-gray-700">
+            <button class="tab-button-dark active" data-tab="tab-1">Data Analyst Intern</button>
+            <button class="tab-button-dark" data-tab="tab-2">Research Assistant</button>
+            <button class="tab-button-dark" data-tab="tab-3">Global Immersion Programme</button>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="py-8 px-2 sm:px-4 min-h-[200px]">
+            <!-- Tab 1: Data Analyst -->
+            <div id="tab-1" class="tab-content active">
+                <h3 class="text-2xl font-semibold text-white mb-2">Data Analyst Intern</h3>
+                <p class="text-lg text-slate-300 mb-4">Orissa Ferrotechs Pvt. Ltd.</p>
+                <p class="text-slate-300 text-base leading-relaxed">
+                    Transformed the company's data handling by designing and implementing a structured database for previously unstructured mining and auction data. I built interactive visualization dashboards comparing floor prices, grades, and quantities, which provided data-driven insights that directly supported executive decisions.
+                </p>
+            </div>
+
+            <!-- Tab 2: Research Assistant -->
+            <div id="tab-2" class="tab-content">
+                <h3 class="text-2xl font-semibold text-white mb-2">Research Assistant</h3>
+                <p class="text-lg text-slate-300 mb-4">KIIT University</p>
+                <p class="text-slate-300 text-base leading-relaxed">
+                    Served as a core researcher on two major projects. I co-authored and published the brain tumor detection paper (97.25% accuracy). Concurrently, I am developing a novel Transformer and Frequency based manuscript restoration technique.
+                </p>
+            </div>
+
+            <!-- Tab 3: Global Immersion -->
+            <div id="tab-3" class="tab-content">
+                <h3 class="text-2xl font-semibold text-white mb-2">Data Analytics Intern</h3>
+                <p class="text-lg text-slate-300 mb-4">Technische Universität (TU) Berlin</p>
+                <p class="text-slate-300 text-base leading-relaxed">
+                    This intensive 1-month program functioned as an internship, where I worked with a team to develop a comprehensive analytical dashboard from scratch. Using Python, Pandas, Matplotlib, and Streamlit, we analyzed real-world smartphone trend data, earning 3 German academic credits.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        <!-- Section 4: Projects (Dark) -->
+        <section id="projects" class="section-dark py-24">
+            <div class="container mx-auto px-6">
+                <div class="fade-in-on-scroll text-center max-w-3xl mx-auto">
+                    <span class="section-subheading gradient-heading">My Work</span>
+                    <h2 class="section-heading-dark mt-4 mb-6">Curated Projects</h2>
+                    <p class="text-lg text-slate-400 mb-16">
+                        I believe in learning by building. Here are a few key projects where I've applied my research and technical skills to create tangible, high-impact solutions.
+                    </p>
+                </div>
+
+                <!-- NEW 2x2 Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Project 1: Brain Tumor Detection -->
+                    <div class="liquid-glass-dark fade-in-on-scroll">
+                        <div class="p-8 flex flex-col h-full">
+                            <h3 class="text-2xl font-semibold text-white mb-3">Brain Tumor Detection</h3>
+                            <p class="text-slate-300 mb-6 flex-grow">A user-facing application built on my published research, allowing for rapid, training-free analysis of MRI scans to detect and localize tumors.</p>
+                            <!-- Tech Pills -->
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="tech-pill-dark">Python</span>
+                                <span class="tech-pill-dark">Swin Transformer</span>
+                                <span class="tech-pill-dark">Dynamic Spectrum</span>
+                                <span class="tech-pill-dark">EDWIN</span>
+                            </div>
+                            <div class="flex gap-4 mt-auto">
+                                <a href="https://shreyanshx95.github.io/brain-tumor-detection.github.io/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Live Demo</a>
+                                <a href="https://github.com/ShreyanshX95/Early-Brain-Tumor-Detection" target="_blank" rel="noopener noreferrer" class="btn btn-secondary-dark">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 2: AuraVision -->
+                    <div class="liquid-glass-dark fade-in-on-scroll" style="transition-delay: 0.15s;">
+                        <div class="p-8 flex flex-col h-full">
+                            <h3 class="text-2xl font-semibold text-white mb-3">AuraVision (Manuscript Model)</h3>
+                            <p class="text-slate-300 mb-6 flex-grow">The project-based implementation of my "AuraVision" research, designed to be a web tool for historians and linguists to restore and analyze degraded manuscripts.</p>
+                            <!-- Tech Pills -->
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="tech-pill-dark">Python</span>
+                                <span class="tech-pill-dark">SWinir</span>
+                                <span class="tech-pill-dark">FFC</span>
+                                <span class="tech-pill-dark">Frequency Analysis</span>
+                            </div>
+                            <div class="flex gap-4 mt-auto">
+                                <a href="https://your-github-io-link.com/auravision-demo" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Updating Soon</a>
+                                <a href="#" class="btn btn-disabled">Coming Soon</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 3: Agentic AI -->
+                    <div class="liquid-glass-dark fade-in-on-scroll" style="transition-delay: 0.3s;">
+                        <div class="p-8 flex flex-col h-full">
+                            <h3 class="text-2xl font-semibold text-white mb-3">Agentic AI Prototype</h3>
+                            <p class="text-slate-300 mb-6 flex-grow">A conceptual prototype for an AI system that connects to real-time databases (e.g., for medicine or blood units) to find and display nearby available resources for users.</p>
+                            <!-- Tech Pills -->
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="tech-pill-dark">Conceptual Design</span>
+                                <span class="tech-pill-dark">AI</span>
+                                <span class="tech-pill-dark">Database Design</span>
+                            </div>
+                            <div class="flex gap-4 mt-auto">
+                                <a href="https://your-github-io-link.com/agentic-ai-demo" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Live Demo</a>
+                                <a href="https://github.com/your-repo/agentic-ai" target="_blank" rel="noopener noreferrer" class="btn btn-secondary-dark">View Concept</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 4: Smartphone Dashboard -->
+                    <div class="liquid-glass-dark fade-in-on-scroll" style="transition-delay: 0.45s;">
+                        <div class="p-8 flex flex-col h-full">
+                            <h3 class="text-2xl font-semibold text-white mb-3">Smartphone Analytics Dashboard</h3>
+                            <p class="text-slate-300 mb-6 flex-grow">An interactive Streamlit dashboard, (work from TU Berlin), to analyze and visualize smartphone data, exploring price-to-specification relationships across brands.</p>
+                            <!-- Tech Pills -->
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="tech-pill-dark">Streamlit</span>
+                                <span class="tech-pill-dark">Pandas</span>
+                                <span class="tech-pill-dark">Seaborn</span>
+                                <span class="tech-pill-dark">Plotly</span>
+                            </div>
+                            <div class="flex gap-4 mt-auto">
+                                <a href="https://shreyanshx95.github.io/Mobile-Phone-Analysis.github.io/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Live Demo</a>
+                                <a href="https://github.com/ShreyanshX95/Mobiles_data_analysis" target="_blank" rel="noopener noreferrer" class="btn btn-secondary-dark">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Academics & Skills (Light) -->
+        <section id="academics" class="section-light py-24">
+            <div class="container mx-auto px-6">
+                <!-- Part 5.A: Academic Performance -->
+                <div class="fade-in-on-scroll mb-24">
+                    <div class="text-center max-w-3xl mx-auto">
+                        <span class="section-subheading gradient-heading">Data-Driven</span>
+                        <h2 class="section-heading-light mt-4 mb-6">Academic Performance</h2>
+                        <p class="text-lg text-slate-600 mb-16">
+                            I believe in consistent growth and performance. My academic record reflects a strong upward trend in my SGPA, demonstrating my increasing mastery of complex subjects.
+                        </p>
+                    </div>
+                    <div class="liquid-glass-light p-4 sm:p-8 relative">
+                        <canvas id="sgpaChart" class="w-full h-80 md:h-96"></canvas>
+                        <!-- --- FIX: Changed top-8 right-8 to bottom-8 right-8 --- -->
+                        <div class="absolute bottom-8 right-8 bg-white/50 backdrop-blur-md p-4 rounded-lg text-right border border-black/10">
+                            <div class="text-sm text-slate-500">Overall CGPA</div>
+                            <div class="text-3xl font-bold text-black">8.67</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Part 5.B: Tech Stack (NEW APP WALL) -->
+                <div class="fade-in-on-scroll mb-24">
+                    <div class="text-center max-w-3xl mx-auto">
+                        <span class="section-subheading gradient-heading">Toolkit</span>
+                        <h2 class="section-heading-light mt-4 mb-6">My Application Toolkit</h2>
+                        <p class="text-lg text-slate-600 mb-16">
+                            From ideation in Pitch to deployment with Streamlit, I'm fluent in the complete ecosystem of modern data science and software development applications.
+                        </p>
+                    </div>
+                    
+                    <!-- SOTA App Wall -->
+                    <div class="app-wall-container">
+                        <div class="app-wall-row animate-marquee-slow">
+                            <!-- Row 1 -->
+                            <div class="app-squircle app-vscode"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.1 11.2l-6.3-6.3c-.4-.4-1-.4-1.4 0L12 8.3 8.6 4.9c-.4-.4-1-.4-1.4 0L.9 11.2c-.4.4-.4 1 0 1.4l6.3 6.3c.4.4 1 .4 1.4 0L12 15.4l3.4 3.4c.4.4 1 .4 1.4 0l6.3-6.3c.4-.4.4-1 0-1.4zM11.3 12L3.1 3.8l5.6 5.6L11.3 12zm.7.7l8.2 8.2-5.6-5.6L12 12.7z" fill="#FFF"/></svg></div>
+                            <div class="app-squircle app-colab"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 15.6c-3.1 0-5.6-2.5-5.6-5.6s2.5-5.6 5.6-5.6 5.6 2.5 5.6 5.6-2.5 5.6-5.6 5.6z" fill="#FFF"/><path d="M12 8.4c-2 0-3.6 1.6-3.6 3.6s1.6 3.6 3.6 3.6 3.6-1.6 3.6-3.6-1.6-3.6-3.6-3.6z" fill="#FFF"/></svg></div>
+                            <div class="app-squircle app-jupyter"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#F37626"/><circle cx="12" cy="12" r="5" fill="#FFF"/><circle cx="5.5" cy="6.5" r="1.5" fill="#FFF"/><circle cx="18.5" cy="6.5" r="1.5" fill="#FFF"/><circle cx="5.5" cy="17.5" r="1.5" fill="#FFF"/></svg></div>
+                            <div class="app-squircle app-anaconda"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z" fill="#43B049"/></svg></div>
+                            <div class="app-squircle app-github"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.165 6.839 9.488.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.951 0-1.093.39-1.988 1.03-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.82c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.026 2.747-1.026.546 1.379.202 2.398.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.85-2.339 4.695-4.566 4.942.359.309.678.92.678 1.856 0 1.34-.012 2.419-.012 2.746 0 .267.18.577.688.48A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" fill="#FFF"/></svg></div>
+                            <div class="app-squircle app-excel"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 13.2v-2.4l-3.3-1.2V7H4v10h14.7v-2.6l3.3-1.2zM17.3 14v2H5.3V8h12v2.1l-1.4.5V12h1.4v2zM12 10.3l1.8 1.7-1.8 1.7-1.8-1.7 1.8-1.7z" fill="#FFF"/></svg></div>
+                            <div class="app-squircle app-pitch"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8zm-1-12h2v8h-2v-8zm0-3h2v2h-2v-2z" fill="#FFF"/></svg></div>
+                            <div class="app-squircle app-overleaf"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.49 14.31c-.3.09-.61.13-.94.13-1.61 0-2.88-.93-3.21-2.22H7.5v4.13H5.3v-9.68h4.22c1.9 0 3.15 1.25 3.15 3.1 0 1.29-.68 2.29-1.68 2.76.7.23 1.2.78 1.48 1.5l.01.01h-2.1c-.22-.51-.59-.9-1.07-1.12zm-3.49-3.4c.3-.82 1.13-1.37 2.03-1.37.93 0 1.57.55 1.57 1.36 0 .86-.64 1.4-1.57 1.4-.9 0-1.73-.55-2.03-1.39zm8.17 3.4h-2.11v-5.55h2.11v5.55zm0-6.66h-2.11v-2.1h2.11v2.1z" fill="#FFF"/></svg></div>
+                            
+                            <!-- Duplicate Row 1 -->
+                            <div class="app-squircle app-vscode"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.1 11.2l-6.3-6.3c-.4-.4-1-.4-1.4 0L12 8.3 8.6 4.9c-.4-.4-1-.4-1.4 0L.9 11.2c-.4.4-.4 1 0 1.4l6.3 6.3c.4.4 1 .4 1.4 0L12 15.4l3.4 3.4c.4.4 1 .4 1.4 0l6.3-6.3c.4-.4.4-1 0-1.4zM11.3 12L3.1 3.8l5.6 5.6L11.3 12zm.7.7l8.2 8.2-5.6-5.6L12 12.7z" fill="#FFF"/></svg></div>
+                            <div class="app-squircle app-colab"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 15.6c-3.1 0-5.6-2.5-5.6-5.6s2.5-5.6 5.6-5.6 5.6 2.5 5.6 5.6-2.5 5.6-5.6 5.6z" fill="#FFF"/><path d="M12 8.4c-2 0-3.6 1.6-3.6 3.6s1.6 3.6 3.6 3.6 3.6-1.6 3.6-3.6-1.6-3.6-3.6-3.6z" fill="#FFF"/></svg></div>
+                            <div class="app-squircle app-jupyter"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#F37626"/><circle cx="12" cy="12" r="5" fill="#FFF"/><circle cx="5.5" cy="6.5" r="1.5" fill="#FFF"/><circle cx="18.5" cy="6.5" r="1.5" fill="#FFF"/><circle cx="5.5" cy="17.5" r="1.5" fill="#FFF"/></svg></div>
+                            <div class="app-squircle app-anaconda"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z" fill="#43B049"/></svg></div>
+                        </div>
+                        <div class="app-wall-row animate-marquee-fast">
+                            <!-- Row 2 -->
+                            <div class="app-squircle app-python"><svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><path d="M64 114.8c-28.1 0-50.8-22.8-50.8-50.8S35.9 13.2 64 13.2s50.8 22.8 50.8 50.8-22.8 50.8-50.8 50.8z" fill="#387EB8"/><path d="M93.3 50.8c0-10.4-12.7-18-28.4-18H52.2v12.2h12.7c8.3 0 15.7 3.3 15.7 9.8 0 6.5-7.4 9.8-15.7 9.8H48v12.2h17c-1.3 7.8-8.7 13.5-17.7 13.5-8.9 0-16.3-5.7-17.6-13.5H16.2c1.3 14.8 14.6 26 29.8 26 15.2 0 28.5-11.2 29.8-26v-1.9c5.1-1.2 8.5-5.6 8.5-10.8zM34.7 63.8c0 10.4 12.7 18 28.4 18h12.7V69.6H63.1c-8.3 0-15.7-3.3-15.7-9.8 0-6.5 7.4-9.8 15.7-9.8H80V37.8H63.8c-1.3-7.8-8.7-13.5-17.7-13.5-8.9 0-16.3 5.7-17.6-13.5h14.2c1.3-7 8-12.2 15.4-12.2 7.4 0 14.1 5.2 15.4 12.2H34.7v12.7z" fill="#FFD43B"/><path d="M49 33.6c-2.7 0-4.8 2.2-4.8 4.8s2.2 4.8 4.8 4.8 4.8-2.2 4.8-4.8-2.1-4.8-4.8-4.8zm29.2 56c-2.7 0-4.8 2.2-4.8 4.8s2.2 4.8 4.8 4.8 4.8-2.2 4.8-4.8-2.2-4.8-4.8-4.8z" fill="#fff"/></svg></div>
+                            <div class="app-squircle app-streamlit"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.4 15.01L12 13.2l-3.4 3.81-1.41-1.22 4.81-5.38 4.81 5.38-1.41 1.22zm-6.8-10.02L12 10.8l3.4-3.81 1.41 1.22-4.81 5.38-4.81-5.38 1.41-1.22z" fill="#FF4B4B"/></svg></div>
+                            <div class="app-squircle app-excel"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 13.2v-2.4l-3.3-1.2V7H4v10h14.7v-2.6l3.3-1.2zM17.3 14v2H5.3V8h12v2.1l-1.4.5V12h1.4v2zM12 10.3l1.8 1.7-1.8 1.7-1.8-1.7 1.8-1.7z" fill="#FFF"/></svg></div>
+                            <div class="app-squircle app-pitch"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8zm-1-12h2v8h-2v-8zm0-3h2v2h-2v-2z" fill="#FFF"/></svg></div>
+                            <div class="app-squircle app-vscode"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.1 11.2l-6.3-6.3c-.4-.4-1-.4-1.4 0L12 8.3 8.6 4.9c-.4-.4-1-.4-1.4 0L.9 11.2c-.4.4-.4 1 0 1.4l6.3 6.3c.4.4 1 .4 1.4 0L12 15.4l3.4 3.4c.4.4 1 .4 1.4 0l6.3-6.3c.4-.4.4-1 0-1.4zM11.3 12L3.1 3.8l5.6 5.6L11.3 12zm.7.7l8.2 8.2-5.6-5.6L12 12.7z" fill="#FFF"/></svg></div>
+                            <div class="app-squircle app-github"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.165 6.839 9.488.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.951 0-1.093.39-1.988 1.03-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.82c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.026 2.747-1.026.546 1.379.202 2.398.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.85-2.339 4.695-4.566 4.942.359.309.678.92.678 1.856 0 1.34-.012 2.419-.012 2.746 0 .267.18.577.688.48A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" fill="#FFF"/></svg></div>
+                            
+                            <!-- Duplicate Row 2 -->
+                            <div class="app-squircle app-python"><svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><path d="M64 114.8c-28.1 0-50.8-22.8-50.8-50.8S35.9 13.2 64 13.2s50.8 22.8 50.8 50.8-22.8 50.8-50.8 50.8z" fill="#387EB8"/><path d="M93.3 50.8c0-10.4-12.7-18-28.4-18H52.2v12.2h12.7c8.3 0 15.7 3.3 15.7 9.8 0 6.5-7.4 9.8-15.7 9.8H48v12.2h17c-1.3 7.8-8.7 13.5-17.7 13.5-8.9 0-16.3-5.7-17.6-13.5H16.2c1.3 14.8 14.6 26 29.8 26 15.2 0 28.5-11.2 29.8-26v-1.9c5.1-1.2 8.5-5.6 8.5-10.8zM34.7 63.8c0 10.4 12.7 18 28.4 18h12.7V69.6H63.1c-8.3 0-15.7-3.3-15.7-9.8 0-6.5 7.4-9.8 15.7-9.8H80V37.8H63.8c-1.3-7.8-8.7-13.5-17.7-13.5-8.9 0-16.3 5.7-17.6-13.5h14.2c1.3-7 8-12.2 15.4-12.2 7.4 0 14.1 5.2 15.4 12.2H34.7v12.7z" fill="#FFD43B"/><path d="M49 33.6c-2.7 0-4.8 2.2-4.8 4.8s2.2 4.8 4.8 4.8 4.8-2.2 4.8-4.8-2.1-4.8-4.8-4.8zm29.2 56c-2.7 0-4.8 2.2-4.8 4.8s2.2 4.8 4.8 4.8 4.8-2.2 4.8-4.8-2.2-4.8-4.8-4.8z" fill="#fff"/></svg></div>
+                            <div class="app-squircle app-streamlit"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.4 15.01L12 13.2l-3.4 3.81-1.41-1.22 4.81-5.38 4.81 5.38-1.41 1.22zm-6.8-10.02L12 10.8l3.4-3.81 1.41 1.22-4.81 5.38-4.81-5.38 1.41-1.22z" fill="#FF4B4B"/></svg></div>
+                            <div class="app-squircle app-excel"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 13.2v-2.4l-3.3-1.2V7H4v10h14.7v-2.6l3.3-1.2zM17.3 14v2H5.3V8h12v2.1l-1.4.5V12h1.4v2zM12 10.3l1.8 1.7-1.8 1.7-1.8-1.7 1.8-1.7z" fill="#FFF"/></svg></div>
+                            <div class="app-squircle app-pitch"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8zm-1-12h2v8h-2v-8zm0-3h2v2h-2v-2z" fill="#FFF"/></svg></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Part 5.C: Certifications -->
+                <div class="fade-in-on-scroll">
+                    <div class="text-center max-w-3xl mx-auto">
+                        <span class="section-subheading gradient-heading">Credentials</span>
+                        <h2 class="section-heading-light mt-4 mb-6">Continuous Learning</h2>
+                        <p class="text-lg text-slate-600 mb-16">
+                            From cloud-based machine learning to effective leadership, I am committed to continuous learning from world-class institutions.
+                        </p>
+                    </div>
+                    <!-- Expanded 2x3 Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="liquid-glass-light p-6">
+                            <h3 class="text-xl font-semibold text-black mb-1">AWS Machine Learning</h3>
+                            <p class="text-slate-600 mb-4">Amazon Web Services</p>
+                            <a href="https://your-credential-link.com/aws" target="_blank" rel="noopener noreferrer" class="font-medium text-[var(--apple-blue)] hover:text-[var(--apple-blue-hover)]">View Credential &rarr;</a>
+                        </div>
+                        <div class="liquid-glass-light p-6">
+                            <h3 class="text-xl font-semibold text-black mb-1">Data Analytics & Visualization</h3>
+                            <p class="text-slate-600 mb-4">Technische Universität (TU) Berlin</p>
+                            <a href="https://your-credential-link.com/tu-berlin" target="_blank" rel="noopener noreferrer" class="font-medium text-[var(--apple-blue)] hover:text-[var(--apple-blue-hover)]">View Credential &rarr;</a>
+                        </div>
+                        <div class="liquid-glass-light p-6">
+                            <h3 class="text-xl font-semibold text-black mb-1">High Performance Collaboration</h3>
+                            <p class="text-slate-600 mb-4">Northwestern University</p>
+                            <a href="https://www.coursera.org/account/accomplishments/verify/BNK78BH1UJOV" target="_blank" rel="noopener noreferrer" class="font-medium text-[var(--apple-blue)] hover:text-[var(--apple-blue-hover)]">View Credential &rarr;</a>
+                        </div>
+                        <div class="liquid-glass-light p-6">
+                            <h3 class="text-xl font-semibold text-black mb-1">Leading Teams</h3>
+                            <p class="text-slate-600 mb-4">University of Illinois</p>
+                            <a href="https://www.coursera.org/account/accomplishments/verify/3HOH7KTYGIKR" target="_blank" rel="noopener noreferrer" class="font-medium text-[var(--apple-blue)] hover:text-[var(--apple-blue-hover)]">View Credential &rarr;</a>
+                        </div>
+                        <div class="liquid-glass-light p-6">
+                            <h3 class="text-xl font-semibold text-black mb-1">Business for Good</h3>
+                            <p class="text-slate-600 mb-4">Coursera</p>
+                            <a href="https://www.coursera.org/account/accomplishments/verify/FFUNCXXO2LHZ?utm_source=link&utm_medium=certificate&utm_content=cert_image&utm_campaign=sharing_cta&utm_product=course" target="_blank" rel="noopener noreferrer" class="font-medium text-[var(--apple-blue)] hover:text-[var(--apple-blue-hover)]">View Credential &rarr;</a>
+                        </div>
+                        <div class="liquid-glass-light p-6">
+                            <h3 class="text-xl font-semibold text-black mb-1">Ethical Decision Making</h3>
+                            <p class="text-slate-600 mb-4">Coursera</p>
+                            <a href="https://www.coursera.org/account/accomplishments/verify/8TPC48LSSXTX?utm_source=link&utm_medium=certificate&utm_content=cert_image&utm_campaign=sharing_cta&utm_product=course" target="_blank" rel="noopener noreferrer" class="font-medium text-[var(--apple-blue)] hover:text-[var(--apple-blue-hover)]">View Credential &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Contact (Dark) -->
+        <section id="contact" class="section-dark py-24">
+            <div class="container mx-auto px-6">
+                <div class="fade-in-on-scroll text-center max-w-2xl mx-auto">
+                    <h2 class="pro-heading text-5xl md:text-7xl mb-6">
+                        Let's Connect.
+                    </h2>
+                    <p class="text-lg text-slate-300 mb-8">
+                        I am actively seeking new opportunities in machine learning, data science, and business development. If you have a challenging problem to solve or want to collaborate, I'd love to hear from you.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+  <button id="copyEmailBtn" class="btn btn-primary inline-flex items-center justify-center">
+    <span id="copyEmailText">22053630@kiit.ac.in</span>
+  </button>
+
+  <div class="flex justify-center items-center space-x-6">
+    <a href="https://www.linkedin.com/in/shreyansh-kumar-basotia/" target="_blank" rel="noopener noreferrer"
+       class="text-slate-400 hover:text-white transition duration-300" title="LinkedIn" aria-label="LinkedIn">
+      <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"/>
+      </svg>
+    </a>
+
+    <a href="https://github.com/ShreyanshX95" target="_blank" rel="noopener noreferrer"
+       class="text-slate-400 hover:text-white transition duration-300" title="GitHub" aria-label="GitHub">
+      <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path fill-rule="evenodd" d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" clip-rule="evenodd"/>
+      </svg>
+    </a>
+  </div>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="section-dark border-t border-slate-800">
+        <div class="container mx-auto px-6 py-12 text-center text-slate-400">
+            <p>&copy; 2025 | Shreyansh Kumar Basotia</p>
+        </div>
+    </footer>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- Hero Animation (three.js) w/ Streaking Stars ---
+            let scene, camera, renderer, particles, shootingStars;
+            const heroCanvas = document.getElementById('hero-canvas');
+            
+            function initHeroAnimation() {
+                scene = new THREE.Scene();
+                camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                renderer = new THREE.WebGLRenderer({ canvas: heroCanvas, alpha: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+
+                // Starfield
+                const particleCount = 7000;
+                const particleGeometry = new THREE.BufferGeometry();
+                const positions = new Float32Array(particleCount * 3);
+                for (let i = 0; i < particleCount * 3; i++) {
+                    positions[i] = (Math.random() - 0.5) * 30;
+                }
+                particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                const particleMaterial = new THREE.PointsMaterial({
+                    color: 0x555555, // Darker grey
+                    size: 0.015,
+                    transparent: true,
+                    opacity: 0.7
+                });
+                particles = new THREE.Points(particleGeometry, particleMaterial);
+                scene.add(particles);
+
+                // Shooting Stars
+                shootingStars = [];
+                for(let i=0; i<5; i++) {
+                    setTimeout(createShootingStar, Math.random() * 1000);
+                }
+                
+                camera.position.z = 5;
+                animate();
+            }
+
+            function createShootingStar() {
+                const geometry = new THREE.BufferGeometry();
+                const vertices = new Float32Array(3 * 3); 
+                geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+                
+                const material = new THREE.LineBasicMaterial({
+                    color: 0xffffff,
+                    linewidth: 1,
+                    transparent: true,
+                    opacity: 0.8,
+                });
+                
+                const star = new THREE.Line(geometry, material);
+                
+                star.position.x = (Math.random() - 0.5) * 20;
+                star.position.y = (Math.random() - 0.5) * 10 + 5; // Start higher up
+                star.position.z = (Math.random() - 0.5) * 10;
+                
+                const velocity = {
+                    x: (Math.random() - 0.8) * 0.15, // Move left-ish, faster
+                    y: (Math.random() - 0.8) * 0.15, // Move down, faster
+                    z: 0
+                };
+                
+                const tailLength = 1.5 + Math.random(); // Longer tail
+                star.userData = { velocity, tailLength, life: 1.0 };
+                
+                scene.add(star);
+                shootingStars.push(star);
+            }
+            
+            let mouseX = 0, mouseY = 0;
+            document.addEventListener('mousemove', (event) => {
+                mouseX = (event.clientX - window.innerWidth / 2) / 1000;
+                mouseY = (event.clientY - window.innerHeight / 2) / 1000;
+            });
+
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                // Animate starfield
+                particles.rotation.x += 0.0001;
+                particles.rotation.y += 0.0002;
+                camera.position.x += (mouseX - camera.position.x) * 0.01;
+                camera.position.y += (-mouseY - camera.position.y) * 0.01;
+                camera.lookAt(scene.position);
+
+                // Animate shooting stars
+                if (Math.random() < 0.005 && shootingStars.length < 7) {
+                    createShootingStar();
+                }
+
+                shootingStars.forEach((star, index) => {
+                    star.userData.life -= 0.008; // Fade slower
+                    star.material.opacity = star.userData.life;
+
+                    star.position.x += star.userData.velocity.x;
+                    star.position.y += star.userData.velocity.y;
+                    
+                    const positions = star.geometry.attributes.position.array;
+                    // Head
+                    positions[0] = 0;
+                    positions[1] = 0;
+                    positions[2] = 0;
+                    // Tail
+                    positions[3] = -star.userData.velocity.x * star.userData.tailLength;
+                    positions[4] = -star.userData.velocity.y * star.userData.tailLength;
+                    positions[5] = 0;
+                    // End of tail (matches tail)
+                    positions[6] = -star.userData.velocity.x * star.userData.tailLength;
+                    positions[7] = -star.userData.velocity.y * star.userData.tailLength;
+                    positions[8] = 0;
+
+                    star.geometry.attributes.position.needsUpdate = true;
+                    
+                    if (star.userData.life <= 0) {
+                        scene.remove(star);
+                        shootingStars.splice(index, 1);
+                    }
+                });
+
+                renderer.render(scene, camera);
+            }
+            
+            function onWindowResize() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                if (renderer) {
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                }
+            }
+            window.addEventListener('resize', onWindowResize, false);
+            
+            if (heroCanvas) {
+                initHeroAnimation();
+            }
+
+            // --- Mobile Menu Logic ---
+            const menuButton = document.getElementById('menuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+            menuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            function closeMobileMenu() {
+                mobileMenu.classList.add('hidden');
+            }
+            
+            // --- Sticky Nav & Active Link Scrolling ---
+            const header = document.getElementById('header');
+            const navLinks = document.querySelectorAll('.nav-link[data-section]');
+            const sections = document.querySelectorAll('section[id]');
+
+            window.addEventListener('scroll', () => {
+                // Nav background
+                if (window.scrollY > 50) {
+                    header.classList.add('glass-nav-scrolled');
+                } else {
+                    header.classList.remove('glass-nav-scrolled');
+                }
+
+                // Active link
+                let current = 'home';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (scrollY >= sectionTop - 100) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    const linkSection = link.getAttribute('data-section').replace('-mobile', '');
+                    if (linkSection === current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            // Close mobile menu on link click
+            document.querySelectorAll('#mobileMenu .nav-link').forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+
+            // --- Scroll-Triggered Fade-in Animation ---
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in-on-scroll').forEach(el => {
+                observer.observe(el);
+            });
+
+            // --- Experience Tabs (Verified Logic - v5.0 FIX) ---
+            // This is the definitive fix. The bug was using querySelector on the container
+            // instead of a global getElementById for the unique tab content.
+            const tabContainer = document.querySelector('#experience .liquid-glass-dark');
+            
+            if (tabContainer) {
+                const tabButtons = tabContainer.querySelectorAll('.tab-button-dark');
+                
+                tabButtons.forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault(); // Prevent default link behavior
+                        
+                        // 1. Deactivate all buttons in this container
+                        tabButtons.forEach(btn => btn.classList.remove('active'));
+                        
+                        // 2. Activate the clicked button
+                        button.classList.add('active');
+                        
+                        // 3. Deactivate all tab-content blocks *within this card*
+                        const tabContents = tabContainer.querySelectorAll('.tab-content');
+                        tabContents.forEach(content => content.classList.remove('active'));
+                        
+                        // 4. Activate the corresponding content
+                        const targetTab = button.getAttribute('data-tab');
+                        const targetContent = document.getElementById(targetTab); // <-- THE FIX
+                        
+                        if (targetContent) {
+                            targetContent.classList.add('active');
+                        } else {
+                            console.error('No tab content found for ID:', targetTab);
+                        }
+                    });
+                });
+            } else {
+                console.error('Experience tab container not found.');
+            }
+
+            // --- SGPA Chart.js (Apple-Style Gradient) ---
+            const computedStyles = getComputedStyle(document.documentElement);
+            const textSecondaryLight = computedStyles.getPropertyValue('--text-secondary-light').trim() || '#515154';
+            const gridColorLight = 'rgba(0, 0, 0, 0.1)';
+
+            const sgpaCtx = document.getElementById('sgpaChart')?.getContext('2d');
+            if (sgpaCtx) {
+                const sgpaData = [8.25, 8.48, 8.48, 8.50, 9.05, 9.21];
+                const labels = ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4', 'Sem 5', 'Sem 6'];
+
+                // Pink-to-Purple Gradient
+                const gradient = sgpaCtx.createLinearGradient(0, 0, 0, 400);
+                gradient.addColorStop(0, '#ec4899'); // pink-500
+                gradient.addColorStop(1, '#a855f7'); // purple-500
+
+                new Chart(sgpaCtx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'My SGPA',
+                                data: sgpaData,
+                                borderColor: gradient,
+                                borderWidth: 4,
+                                tension: 0.4,
+                                pointBackgroundColor: '#fff',
+                                pointBorderColor: '#ec4899',
+                                pointBorderWidth: 2,
+                                pointRadius: 5,
+                                fill: true,
+                                backgroundColor: 'rgba(236, 72, 153, 0.05)' // Lighter pink fill
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        interaction: { // Enable hover interactions
+                            mode: 'index',
+                            intersect: false,
+                        },
+                        plugins: {
+                            legend: {
+                                display: false // Removed legend
+                            },
+                            tooltip: { // --- FIX: Added tooltip configuration ---
+                                enabled: true,
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.parsed.y !== null) {
+                                            label = ` SGPA: ${context.parsed.y}`;
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+                                min: 7.5,
+                                max: 9.5,
+                                grid: { color: gridColorLight },
+                                ticks: { color: textSecondaryLight }
+                            },
+                            x: {
+                                grid: { display: false },
+                                ticks: { color: textSecondaryLight }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // --- Copy to Clipboard ---
+            const copyBtn = document.getElementById('copyEmailBtn');
+            const copyText = document.getElementById('copyEmailText');
+            copyBtn.addEventListener('click', () => {
+                const email = 'shreyanshkumarbasotia7916@gmail.com';
+                const unsecuredCopyToClipboard = (text) => {
+                    const textArea = document.createElement("textarea");
+                    textArea.value = text;
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
+                    try {
+                        document.execCommand('copy');
+                        copyText.textContent = 'Email Copied!';
+                        setTimeout(() => {
+                            copyText.textContent = email;
+                        }, 2000);
+                    } catch (err) {
+                        console.error('Fallback: Oops, unable to copy', err);
+                    }
+                    document.body.removeChild(textArea);
+                };
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(email).then(() => {
+                        copyText.textContent = 'Email Copied!';
+                        setTimeout(() => {
+                            copyText.textContent = email;
+                        }, 2000);
+                    }).catch(err => {
+                        unsecuredCopyToClipboard(email);
+                    });
+                } else {
+                    unsecuredCopyToClipboard(email);
+                }
+            });
+
+        });
+
+        
+
+        
+    </script>
+
+    <script>
+document.querySelectorAll(".tab-button-dark").forEach(button => {
+    button.addEventListener("click", () => {
+        
+        // Remove active class from all buttons
+        document.querySelectorAll(".tab-button-dark").forEach(btn =>
+            btn.classList.remove("active")
+        );
+
+        // Add active class to clicked button
+        button.classList.add("active");
+
+        // Hide all tab contents
+        document.querySelectorAll(".tab-content").forEach(tab =>
+            tab.classList.remove("active")
+        );
+
+        // Show the selected tab
+        document.getElementById(button.dataset.tab).classList.add("active");
+    });
+});
+</script>
+
+    
+</body>
+</html>
